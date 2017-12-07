@@ -6,6 +6,7 @@ Small Flip Toast Notifications script.
 
 First of all clone the repository.
 
+Then run
 
 ```
 npm install
