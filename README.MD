@@ -22,6 +22,6 @@ npm run watch
 ```
 ... to run compiler in watch mode.
 
-Run `/dist/index.html` to try the demo.
+Run `/demo/index.html` to try the demo.
 
 Enjoy!
