@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flip Notifications</title>
+    <link rel="stylesheet" href="../dist/styles.css">
+    <link rel="stylesheet" href="../dist/demo.css">
+</head>
+<body>
+<section class="heading-text">
+    <h1>Flip Notifications</h1>
+    <p>Select parameters and click `Create` to create notification message. Or click `Random Notification` to create notification message with random params.</p>
+    <div>
+        <p class="label">Notification type:</p>
+        <select id="type_input">
+            <option value="notification" selected>Notification message</option>
+            <option value="success">Success message</option>
+            <option value="warning">Warning message</option>
+            <option value="error">Error message</option>
+        </select>
+
+        <p class="label">Side to attach:</p>
+        <select id="attach_input">
+            <option value="right">Right</option>
+            <option value="left">Left</option>
+        </select>
+
+        <p class="label">Duration (ms):</p>
+        <input type="number" value="5000" placeholder="Duration" id="duration_input">
+
+        <p class="label">Url:</p>
+        <input type="url" placeholder="url" id="url_input">
+    </div>
+    <div class="button-wrapper">
+        <button class="button" onclick="showNotificationFromParams()">Create</button>
+        <button class="button" onclick="showRandomNotification()">Random Notification</button>
+    </div>
+</section>
+
+
+<script src="../dist/notifications.js"></script>
+<script>
+    let quotes = ["Start by doing what's necessary; then do what's possible; and suddenly you are doing the impossible.",
+        "Believe you can and you're halfway there.",
+        "It does not matter how slowly you go as long as you do not stop.",
+        "Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time.",
+        "The will to win, the desire to succeed, the urge to reach your full potential... these are the keys that will unlock the door to personal excellence.",
+        "Don't watch the clock; do what it does. Keep going.",
+        "A creative man is motivated by the desire to achieve, not by the desire to beat others.",
+        "A creative man is motivated by the desire to achieve, not by the desire to beat others.",
+        "Expect problems and eat them for breakfast.",
+        "Start where you are. Use what you have. Do what you can.",
+        "Ever tried. Ever failed. No matter. Try Again. Fail again. Fail better.",
+        "Be yourself; everyone else is already taken.",
+        "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.",
+        "Always remember that you are absolutely unique. Just like everyone else.",
+        "Do not take life too seriously. You will never get out of it alive.",
+        "People who think they know everything are a great annoyance to those of us who do.",
+        "Procrastination is the art of keeping up with yesterday.",
+        "Get your facts first, then you can distort them as you please.",
+        "A day without sunshine is like, you know, night.",
+        "My grandmother started walking five miles a day when she was sixty. She's ninety-seven now, and we don't know where the hell she is.",
+        "Don't sweat the petty things and don't pet the sweaty things.",
+        "Always do whatever's next.",
+        "Happiness is not something ready made. It comes from your own actions."];
+
+    function showRandomNotification() {
+        if(!window.FlipNotifications) {
+            alert('Seems like you haven`t compiled the files...')
+        }
+
+        let url = Math.random() >= 0.5 ? null : 'javascript:;';
+        let attach = Math.random() >= 0.5 ? 'left' : 'right';
+        let speed = Math.floor(Math.random() * (20000 - 3000 + 1)) + 3000;
+        let quote = quotes[Math.floor(Math.random() * ((quotes.length - 1) + 1))];
+        let types = ['error', 'notification', 'warning', 'success'];
+        let type = types[Math.floor(Math.random() * ((types.length - 1) + 1))];
+
+        new window.FlipNotifications({
+            message: quote,
+            url: url,
+            duration: speed,
+            attach: attach,
+            type: type
+        }).show();
+    }
+
+    function showNotificationFromParams() {
+        if(!window.FlipNotifications) {
+            alert('Seems like you haven`t compiled the files...')
+        }
+
+        let url = document.getElementById('url_input').value;
+        let attach = document.getElementById('attach_input').value;
+        let speed = document.getElementById('duration_input').value;
+        let quote = quotes[Math.floor(Math.random() * ((quotes.length - 1) + 1))];
+        let type = document.getElementById('type_input').value;
+
+        new window.FlipNotifications({
+            message: quote,
+            url: url,
+            duration: speed,
+            attach: attach,
+            type: type
+        }).show();
+    }
+</script>
+</body>
+</html>
