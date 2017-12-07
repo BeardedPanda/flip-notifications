@@ -1,0 +1,198 @@
+/**
+  variables
+ */
+$background_color: #fff;
+$text_color: #484860;
+$border-color: #e2e2e2;
+//$error_red: #e24141;
+$error_red: #ef3359;
+$warning_orange: #fdbc72;
+$success_green: #30b885;
+$darker_white: #f9f9f9;
+
+/**
+  Styles
+ */
+.notification-wrapper {
+  position: fixed;
+  background: $background_color;
+  line-height: 1.4;
+  z-index: 1000;
+  pointer-events: none;
+  font-size: .9rem;
+  font-family: Helvetica Neue, Segoe UI, Helvetica, Arial, sans-serif;
+  max-width: 300px;
+
+  top: 0;
+  display: flex;
+  border: 1px solid $border-color;
+  width: 300px;
+  padding: 20px;
+
+  -webkit-transition: all ease-in-out .1s;
+  -moz-transition: all ease-in-out .1s;
+  -ms-transition: all ease-in-out .1s;
+  -o-transition: all ease-in-out .1s;
+  transition: all ease-in-out .1s;
+
+  &.is-error {
+    background-color: $error_red;
+    color: $darker_white;
+    border-color: darken($error_red, 5%);
+
+    a {
+      color: darken($darker_white, 2%)!important;
+    }
+
+    .icon-wrapper {
+      svg {
+        fill: $darker_white;
+      }
+    }
+  }
+  &.is-warning {
+    background-color: $warning_orange;
+    color: $darker_white;
+    border-color: darken($warning_orange, 5%);
+
+    a {
+      color: darken($darker_white, 2%)!important;
+    }
+
+    .icon-wrapper {
+      svg {
+        fill: $darker_white;
+      }
+    }
+  }
+  &.is-success {
+    background-color: $success_green;
+    color: $darker_white;
+    border-color: darken($success_green, 5%);
+
+    a {
+      color: darken($darker_white, 2%)!important;
+    }
+
+    .icon-wrapper {
+      svg {
+        fill: $darker_white;
+      }
+    }
+  }
+
+  &.is-attached-left {
+    left: 10px;
+  }
+
+  &.is-attached-right {
+    right: 10px;
+  }
+
+  @media screen and(max-width: 25em) {
+      left: 30px;
+      max-width: none;
+      right: 30px;
+  }
+
+  .dismiss {
+    position: absolute;
+    cursor: pointer;
+    opacity: .5;
+    padding: 0 5px 2px;
+    top: 0;
+    right: 0;
+    border-radius: 0 0 0 3px;
+    svg {
+      width: 10px;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .icon-wrapper {
+    padding: 5px 10px 0 0;
+    i {
+      font-size: 1.3rem;
+    }
+
+    svg {
+      width: 18px;
+      height: auto;
+    }
+  }
+
+  .text {
+    width: 100%;
+    p {
+      margin: 0 auto;
+      &.url-wrapper {
+        margin-top: 5px;
+        opacity: .9;
+        font-size: .8rem;
+        text-align: right;
+        a {
+          color: $text_color;
+          opacity: .9;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  &.is-active {
+    pointer-events: auto;
+  }
+
+  &.is-animated {
+    transform-origin: 50% 0;
+
+    &.is-active {
+      animation-name: flipInAnimation;
+      animation-duration: 0.8s;
+    }
+    &.is-hiding {
+      animation-name: flipOutAnimation;
+      animation-duration: 0.3s;
+    }
+  }
+}
+@keyframes flipInAnimation {
+  0% {
+    opacity: 0;
+    transform: perspective(400px) rotate3d(1,0,0,-90deg);
+    transition-timing-function: ease-in;
+  }
+  40% {
+    transform: perspective(400px) rotate3d(1,0,0,20deg);
+    transition-timing-function: ease-out;
+  }
+  60% {
+    transform: perspective(400px) rotate3d(1,0,0,-10deg);
+    transition-timing-function: ease-in;
+    opacity: 1;
+  }
+  80% {
+    transform: perspective(400px) rotate3d(1,0,0,5deg);
+    transition-timing-function: ease-out;
+  }
+  100% {
+    transform: perspective(400px);
+  }
+}
+@keyframes flipOutAnimation {
+  0% {
+    transform: perspective(400px);
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -90deg);
+    transition-timing-function: ease-in;
+    opacity: 0;
+  }
+}
