@@ -46,6 +46,11 @@ class FlipNotifications {
         this.setUpDismissButton();
     }
 
+    /**
+     * Get svg icon out of notification type
+     *
+     * @returns {string}
+     */
     getTypeIconCode() {
         switch (this.type) {
             case 'warning':
