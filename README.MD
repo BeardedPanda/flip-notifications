@@ -1,28 +1,22 @@
 # Flip Notifications
 
-Small Flip Toast Notifications script.
+Lightweight Toast Notifications script with smooth flip animation.
 
-### Installing
+### Demo
+To run demo, clone repository and run `/demo/index.html` file.
 
-First of all clone the repository.
+### Usage
 
-Then run
-
+To show notification simple run this line of code.
 ```
-npm install
+let options = {message: 'Hello world!'}
+new FlipNotifications(options).show();
 ```
-... to install packages.
-
-```
-npm run dev
-```
-... to compile css and js
-or 
-```
-npm run watch
-```
-... to run compiler in watch mode.
-
-Run `/demo/index.html` to try the demo.
+Available options:
+* message: required parameter, notification message
+* url: if set this will add >>View anchor that will redirect you to given url
+* duration: notification showing duration (in ms)
+* attach: the side of notification attachment - can accept string param of `['left', 'right']`
+* type: type of notification - can accept string param of `['notification', 'error', 'warning', 'success']`
 
 Enjoy!
