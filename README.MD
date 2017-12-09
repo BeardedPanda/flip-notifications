@@ -12,7 +12,7 @@ To show notification simple run this line of code.
 let options = {message: 'Hello world!'}
 new FlipNotifications(options).show();
 ```
-Available options:
+### Available options:
 * message: required parameter, notification message
 * url: if set this will add >>View anchor that will redirect you to given url
 * duration: notification showing duration (in ms)
