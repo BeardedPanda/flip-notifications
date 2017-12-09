@@ -82,11 +82,23 @@ $darker_white: #f9f9f9;
   }
 
   &.is-attached-left {
-    left: 10px;
+    @media screen and (max-width: 800px) {
+      left: 0;
+      right: 0;
+      margin: auto;    }
+    @media screen and (min-width: 801px) {
+      left: 10px;
+    }
   }
 
   &.is-attached-right {
-    right: 10px;
+    @media screen and (max-width: 800px) {
+      left: 0;
+      right: 0;
+      margin: auto;    }
+    @media screen and (min-width: 801px) {
+      right: 10px;
+    }
   }
 
   @media screen and(max-width: 25em) {

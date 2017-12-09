@@ -14,9 +14,9 @@ class FlipNotifications {
      * @param params
      */
     constructor(params) {
-        if(!params || !params.message)
+        if (!params || !params.message)
             throw Error('Message param is required!');
-        else if(typeof params.message !== 'string' && typeof params.message !== 'number')
+        else if (typeof params.message !== 'string' && typeof params.message !== 'number')
             throw Error(`Message can't accept type ${typeof params.message}`);
 
         this.message = params.message;
@@ -25,6 +25,19 @@ class FlipNotifications {
         this.url = params.url || null;
         this.type = params.type && ['error', 'notification', 'warning', 'success'].indexOf(params.type) !== -1 ? params.type : 'notification';
         this.wrapper = document.createElement('div');
+
+        /**
+         * Resize event listener function
+         * stored to remove it on dismiss
+         */
+        this.listener = function () {
+            this.resetCurrentNotificationOffsetHeight();
+        }.bind(this);
+        /**
+         * Add event listener to window resize
+         * on window resize - recalculate notifications offset height
+         */
+        window.addEventListener('resize', this.listener);
     }
 
     /**
@@ -40,9 +53,9 @@ class FlipNotifications {
          */
         document.body.appendChild(this.wrapper);
         /**
-         * Recalculate notifications offset heights
+         * Calculate notification offset height
          */
-        this.resetOffsetHeights();
+        this.resetCurrentNotificationOffsetHeight();
     }
 
     /**
@@ -77,13 +90,26 @@ class FlipNotifications {
      * Recalculate all active notifications offsets (on notification dismiss)
      */
     resetOffsetHeights() {
-        let active_notifications = document.querySelectorAll(`.notification-wrapper.is-animated.is-attached-${this.attachment_direction}.is-active`);
+        let active_notifications = document.querySelectorAll('.notification-wrapper.is-animated.is-active' + (window.innerWidth <= 800 ? `` : `.is-attached-${this.attachment_direction}`));
         let offset_top = 0;
-        if(active_notifications.length) {
-            active_notifications.forEach(item => {
-                item.style.top = offset_top + 'px';
-                offset_top += item.clientHeight;
-            })
+        active_notifications.forEach(item => {
+            item.style.top = offset_top + 'px';
+            offset_top += item.clientHeight;
+        })
+    }
+
+    /**
+     * Recalculate current notification offset (on notification creation or window.resize)
+     */
+    resetCurrentNotificationOffsetHeight() {
+        let active_notifications = document.querySelectorAll('.notification-wrapper.is-animated.is-active' + (window.innerWidth <= 800 ? `` : `.is-attached-${this.attachment_direction}`));
+        let offset_top = 0;
+        for (let i = 0; i < active_notifications.length; i++) {
+            if (active_notifications[i] === this.wrapper) {
+                active_notifications[i].style.top = offset_top + 'px';
+                break;
+            }
+            offset_top += active_notifications[i].clientHeight;
         }
     }
 
@@ -117,7 +143,10 @@ class FlipNotifications {
             document.body.removeChild(this.wrapper);
             this.resetOffsetHeights();
         }.bind(this), 260);
-
+        /**
+         * Remove this notification resize event listener
+         */
+        window.removeEventListener('resize', this.listener);
     }
 }
 
